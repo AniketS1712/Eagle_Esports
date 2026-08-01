@@ -52,10 +52,7 @@ class PreviewTournamentBanner extends StatelessWidget {
               left: AppSpacing.md,
               bottom: AppSpacing.md,
               right: AppSpacing.md,
-              child: Text(
-                tournament.title,
-                style: AppTextStyles.headlineMd,
-              ),
+              child: Text(tournament.title, style: AppTextStyles.headlineMd),
             ),
           ],
         ),

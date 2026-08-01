@@ -22,15 +22,10 @@ class TournamentMatch {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'tournament_id': tournamentId,
-      'match_number': matchNumber,
-    };
+    return {'tournament_id': tournamentId, 'match_number': matchNumber};
   }
 
-  TournamentMatch copyWith({
-    int? matchNumber,
-  }) {
+  TournamentMatch copyWith({int? matchNumber}) {
     return TournamentMatch(
       id: id,
       tournamentId: tournamentId,

@@ -11,7 +11,8 @@ class UserProfileHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileProvider).value;
-    final hasAvatar = profile?.avatarUrl != null && profile!.avatarUrl.isNotEmpty;
+    final hasAvatar =
+        profile?.avatarUrl != null && profile!.avatarUrl.isNotEmpty;
 
     return GlassCard(
       child: Row(
@@ -33,10 +34,7 @@ class UserProfileHeader extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  profile?.fullName ?? '—',
-                  style: AppTextStyles.headlineMd,
-                ),
+                Text(profile?.fullName ?? '—', style: AppTextStyles.headlineMd),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   profile?.phone ?? '—',

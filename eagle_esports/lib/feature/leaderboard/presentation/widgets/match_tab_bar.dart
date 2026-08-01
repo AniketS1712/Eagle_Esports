@@ -16,9 +16,9 @@ class MatchTabBar extends StatelessWidget {
 
   /// Tab labels: "Match 1", "Match 2", ... , "Overall".
   List<Tab> get tabs => [
-        for (int i = 1; i <= matchCount; i++) Tab(text: 'Match $i'),
-        const Tab(text: 'Overall'),
-      ];
+    for (int i = 1; i <= matchCount; i++) Tab(text: 'Match $i'),
+    const Tab(text: 'Overall'),
+  ];
 
   @override
   Widget build(BuildContext context) {

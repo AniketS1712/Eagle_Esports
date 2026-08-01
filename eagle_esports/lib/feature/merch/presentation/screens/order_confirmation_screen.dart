@@ -9,10 +9,7 @@ import 'package:eagle_esports/models/merch_order.dart';
 
 /// Screen displayed after placing a merch order, watching for realtime status.
 class OrderConfirmationScreen extends ConsumerWidget {
-  const OrderConfirmationScreen({
-    required this.orderId,
-    super.key,
-  });
+  const OrderConfirmationScreen({required this.orderId, super.key});
 
   final String orderId;
 

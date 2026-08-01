@@ -66,14 +66,10 @@ class AppNotification {
   /// Only used to mark as read — the only update Flutter is allowed
   /// to make per the RLS policy (insert happens server-side only).
   Map<String, dynamic> toMap() {
-    return {
-      'is_read': isRead,
-    };
+    return {'is_read': isRead};
   }
 
-  AppNotification copyWith({
-    bool? isRead,
-  }) {
+  AppNotification copyWith({bool? isRead}) {
     return AppNotification(
       id: id,
       userId: userId,

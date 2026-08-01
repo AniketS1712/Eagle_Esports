@@ -12,10 +12,7 @@ import 'package:go_router/go_router.dart';
 /// Organiser-side leaderboard screen: create matches, enter scores,
 /// view the overall leaderboard, and complete the tournament.
 class OrganiserLeaderboardScreen extends ConsumerStatefulWidget {
-  const OrganiserLeaderboardScreen({
-    required this.tournamentId,
-    super.key,
-  });
+  const OrganiserLeaderboardScreen({required this.tournamentId, super.key});
 
   final String tournamentId;
 
@@ -48,36 +45,31 @@ class _OrganiserLeaderboardScreenState
   }
 
   void _snack(String msg) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(msg)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   @override
   Widget build(BuildContext context) {
-    final matchesAsync =
-        ref.watch(tournamentMatchesProvider(widget.tournamentId));
-    final teamsAsync =
-        ref.watch(paidTeamsProvider(widget.tournamentId));
-    final tournamentAsync =
-        ref.watch(tournamentDetailProvider(widget.tournamentId));
+    final matchesAsync = ref.watch(
+      tournamentMatchesProvider(widget.tournamentId),
+    );
+    final teamsAsync = ref.watch(paidTeamsProvider(widget.tournamentId));
+    final tournamentAsync = ref.watch(
+      tournamentDetailProvider(widget.tournamentId),
+    );
     final isAdding = ref.watch(leaderboardActionsProvider).isLoading;
-    final isCompleting =
-        ref.watch(tournamentActionsProvider).isLoading;
+    final isCompleting = ref.watch(tournamentActionsProvider).isLoading;
 
     return Scaffold(
       body: AppBackground(
         child: SafeArea(
           bottom: false,
           child: matchesAsync.when(
-            loading: () =>
-                const Center(child: CircularProgressIndicator()),
-            error: (e, _) =>
-                Center(child: Text('Error: $e')),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (e, _) => Center(child: Text('Error: $e')),
             data: (matches) => teamsAsync.when(
-              loading: () =>
-                  const Center(child: CircularProgressIndicator()),
-              error: (e, _) =>
-                  Center(child: Text('Error: $e')),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(child: Text('Error: $e')),
               data: (teams) => _Body(
                 tournamentId: widget.tournamentId,
                 matches: matches,
@@ -86,8 +78,7 @@ class _OrganiserLeaderboardScreenState
                 isCompleting: isCompleting,
                 onAddMatch: () => _addMatch(matches.length + 1),
                 onComplete: _completeTournament,
-                isLive: tournamentAsync.value?.status ==
-                    TournamentStatus.live,
+                isLive: tournamentAsync.value?.status == TournamentStatus.live,
               ),
             ),
           ),
@@ -137,12 +128,13 @@ class _Body extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: AppColors.onSurface),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.onSurface,
+                  ),
                   onPressed: () => context.pop(),
                 ),
-                Text('Leaderboard',
-                    style: AppTextStyles.headlineLgMobile),
+                Text('Leaderboard', style: AppTextStyles.headlineLgMobile),
                 const Spacer(),
                 IconButton(
                   onPressed: isAdding ? null : onAddMatch,
@@ -150,11 +142,9 @@ class _Body extends StatelessWidget {
                       ? const SizedBox(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(
-                              strokeWidth: 2),
+                          child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Icon(Icons.add,
-                          color: AppColors.electricCyan),
+                      : const Icon(Icons.add, color: AppColors.electricCyan),
                 ),
               ],
             ),
@@ -172,10 +162,7 @@ class _Body extends StatelessWidget {
             child: TabBarView(
               children: [
                 for (final m in matches)
-                  MatchResultForm(
-                    matchId: m['id'] as String,
-                    teams: teams,
-                  ),
+                  MatchResultForm(matchId: m['id'] as String, teams: teams),
                 LeaderboardPreview(tournamentId: tournamentId),
               ],
             ),
@@ -183,9 +170,7 @@ class _Body extends StatelessWidget {
           // Complete button
           if (isLive)
             Padding(
-              padding: AppSpacing.screenPadding.copyWith(
-                bottom: AppSpacing.xl,
-              ),
+              padding: AppSpacing.screenPadding.copyWith(bottom: AppSpacing.xl),
               child: PrimaryGradientButton(
                 text: 'Complete Tournament',
                 onPressed: onComplete,

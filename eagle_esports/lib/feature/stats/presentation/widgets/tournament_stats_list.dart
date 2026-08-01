@@ -10,19 +10,17 @@ class TournamentStatsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filteredTournaments =
-        tournaments.where((t) => t.status != TournamentStatus.draft).toList();
-    
+    final filteredTournaments = tournaments
+        .where((t) => t.status != TournamentStatus.draft)
+        .toList();
+
     filteredTournaments.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
     if (filteredTournaments.isEmpty) {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(AppSpacing.xl),
-          child: Text(
-            'No tournaments yet',
-            style: AppTextStyles.bodyMd,
-          ),
+          child: Text('No tournaments yet', style: AppTextStyles.bodyMd),
         ),
       );
     }
@@ -34,9 +32,7 @@ class TournamentStatsList extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-          child: TournamentStatCard(
-            tournament: filteredTournaments[index],
-          ),
+          child: TournamentStatCard(tournament: filteredTournaments[index]),
         );
       },
     );

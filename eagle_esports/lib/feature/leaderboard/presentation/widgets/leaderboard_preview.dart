@@ -15,11 +15,9 @@ class LeaderboardPreview extends ConsumerWidget {
     final leaderboard = ref.watch(leaderboardStreamProvider(tournamentId));
 
     return leaderboard.when(
-      loading: () =>
-          const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(
-        child: Text('Error: $e', style: AppTextStyles.bodyMd),
-      ),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) =>
+          Center(child: Text('Error: $e', style: AppTextStyles.bodyMd)),
       data: (rows) {
         if (rows.isEmpty) {
           return Center(
@@ -48,8 +46,7 @@ class _LeaderboardList extends StatelessWidget {
         bottom: AppSpacing.xxxl,
       ),
       itemCount: rows.length,
-      separatorBuilder: (_, _) =>
-          const SizedBox(height: AppSpacing.sm),
+      separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
       itemBuilder: (_, i) => _LeaderboardRow(entry: rows[i]),
     );
   }
@@ -108,9 +105,7 @@ class _LeaderboardRow extends StatelessWidget {
             child: Text(
               prize > 0 ? prize.toStringAsFixed(0) : '—',
               style: AppTextStyles.numberMd.copyWith(
-                color: prize > 0
-                    ? AppColors.statusSuccess
-                    : AppColors.outline,
+                color: prize > 0 ? AppColors.statusSuccess : AppColors.outline,
               ),
               textAlign: TextAlign.end,
             ),

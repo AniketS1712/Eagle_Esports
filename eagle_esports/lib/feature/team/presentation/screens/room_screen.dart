@@ -77,8 +77,10 @@ class RoomScreen extends StatelessWidget {
                           child: SecondaryOutlineButton(
                             text: 'Join Room',
                             leadingIcon: const Icon(Icons.arrow_forward),
-                            onPressed: () =>
-                                context.goNamed(RouteNames.joinRoom, extra: tournament),
+                            onPressed: () => context.goNamed(
+                              RouteNames.joinRoom,
+                              extra: tournament,
+                            ),
                           ),
                         ),
                       ],
@@ -142,4 +144,3 @@ class _RoomActionCard extends StatelessWidget {
     );
   }
 }
-

@@ -7,11 +7,7 @@ class TeamCard extends ConsumerWidget {
   final Map<String, dynamic> team;
   final String tournamentId;
 
-  const TeamCard({
-    super.key,
-    required this.team,
-    required this.tournamentId,
-  });
+  const TeamCard({super.key, required this.team, required this.tournamentId});
 
   void _confirmRemove(
     BuildContext context,
@@ -34,9 +30,7 @@ class TeamCard extends ConsumerWidget {
             child: Text('Cancel', style: AppTextStyles.bodyMd),
           ),
           TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.statusError,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.statusError),
             onPressed: () async {
               Navigator.pop(ctx);
               try {
@@ -44,15 +38,15 @@ class TeamCard extends ConsumerWidget {
                     .read(registeredTeamsActionsProvider.notifier)
                     .removeTeam(teamId: teamId, tournamentId: tournamentId);
                 if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Team removed')),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Team removed')));
                 }
               } catch (e) {
                 if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error: $e')),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Error: $e')));
                 }
               }
             },
@@ -71,10 +65,9 @@ class TeamCard extends ConsumerWidget {
     final paymentStatus = team['payment_status'] as String;
     final inGameLeaderName = team['in_game_leader_name'] as String?;
     final membersList = team['team_members'] as List?;
-    final memberCount =
-        (membersList != null && membersList.isNotEmpty)
-            ? (membersList.first['count'] as int? ?? 0)
-            : 0;
+    final memberCount = (membersList != null && membersList.isNotEmpty)
+        ? (membersList.first['count'] as int? ?? 0)
+        : 0;
 
     return GlassCard(
       child: Column(
@@ -91,7 +84,10 @@ class TeamCard extends ConsumerWidget {
                     color: AppColors.surfaceContainerHigh,
                   ),
                   child: Center(
-                    child: Text('#$slotNumber', style: AppTextStyles.badgeLabel),
+                    child: Text(
+                      '#$slotNumber',
+                      style: AppTextStyles.badgeLabel,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
@@ -141,22 +137,16 @@ class TeamCard extends ConsumerWidget {
                       context: context,
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
-                      builder: (_) => _TeamMembersSheet(
-                        teamId: teamId,
-                        teamName: teamName,
-                      ),
+                      builder: (_) =>
+                          _TeamMembersSheet(teamId: teamId, teamName: teamName),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.xs),
                   if (paymentStatus == 'pending')
                     IconActionButton(
                       icon: Icons.delete_outline,
-                      onPressed: () => _confirmRemove(
-                        context,
-                        ref,
-                        teamId,
-                        teamName,
-                      ),
+                      onPressed: () =>
+                          _confirmRemove(context, ref, teamId, teamName),
                     )
                   else
                     const Tooltip(
@@ -181,10 +171,7 @@ class _TeamMembersSheet extends ConsumerWidget {
   final String teamId;
   final String teamName;
 
-  const _TeamMembersSheet({
-    required this.teamId,
-    required this.teamName,
-  });
+  const _TeamMembersSheet({required this.teamId, required this.teamName});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -219,9 +206,7 @@ class _TeamMembersSheet extends ConsumerWidget {
             loading: () => const Padding(
               padding: EdgeInsets.all(AppSpacing.xl),
               child: Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.electricCyan,
-                ),
+                child: CircularProgressIndicator(color: AppColors.electricCyan),
               ),
             ),
             error: (e, st) => const Padding(
@@ -237,14 +222,14 @@ class _TeamMembersSheet extends ConsumerWidget {
                 final hasAvatar = avatarUrl != null && avatarUrl.isNotEmpty;
 
                 return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: Row(
                     children: [
                       CircleAvatar(
                         radius: AppDimensions.avatarSm / 2,
-                        backgroundImage:
-                            hasAvatar ? NetworkImage(avatarUrl) : null,
+                        backgroundImage: hasAvatar
+                            ? NetworkImage(avatarUrl)
+                            : null,
                         backgroundColor: AppColors.surfaceContainerHigh,
                         child: !hasAvatar
                             ? const Icon(

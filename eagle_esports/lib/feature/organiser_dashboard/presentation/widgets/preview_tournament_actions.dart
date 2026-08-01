@@ -24,10 +24,7 @@ class PreviewTournamentActions extends StatelessWidget {
           onPressed: onPublish,
         ),
         const SizedBox(height: AppSpacing.sm),
-        SecondaryOutlineButton(
-          text: 'Edit Details',
-          onPressed: onEdit,
-        ),
+        SecondaryOutlineButton(text: 'Edit Details', onPressed: onEdit),
       ],
     );
   }

@@ -55,10 +55,7 @@ class MerchOrder {
     };
   }
 
-  MerchOrder copyWith({
-    MerchOrderStatus? status,
-    String? fulfillmentNote,
-  }) {
+  MerchOrder copyWith({MerchOrderStatus? status, String? fulfillmentNote}) {
     return MerchOrder(
       id: id,
       userId: userId,

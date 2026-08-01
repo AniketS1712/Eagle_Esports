@@ -8,6 +8,7 @@ import 'package:eagle_esports/shared/widgets/app_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 class JoinRoomScreen extends ConsumerStatefulWidget {
   const JoinRoomScreen({this.tournament, super.key});
 

@@ -25,11 +25,7 @@ class TopupOption {
   // No toMap() — admin manages this table directly via Supabase
   // dashboard; Flutter only ever reads it.
 
-  TopupOption copyWith({
-    double? amount,
-    bool? isActive,
-    int? sortOrder,
-  }) {
+  TopupOption copyWith({double? amount, bool? isActive, int? sortOrder}) {
     return TopupOption(
       id: id,
       amount: amount ?? this.amount,

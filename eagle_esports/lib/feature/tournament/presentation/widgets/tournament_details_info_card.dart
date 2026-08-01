@@ -52,11 +52,7 @@ class TournamentDetailsInfoCard extends StatelessWidget {
 }
 
 class _InfoTile extends StatelessWidget {
-  const _InfoTile({
-    required this.label,
-    required this.value,
-    this.valueColor,
-  });
+  const _InfoTile({required this.label, required this.value, this.valueColor});
 
   final String label;
   final String value;
@@ -69,10 +65,7 @@ class _InfoTile extends StatelessWidget {
       children: [
         Text(label, style: AppTextStyles.caption),
         const SizedBox(height: AppSpacing.xxs),
-        Text(
-          value,
-          style: AppTextStyles.numberMd.copyWith(color: valueColor),
-        ),
+        Text(value, style: AppTextStyles.numberMd.copyWith(color: valueColor)),
       ],
     );
   }

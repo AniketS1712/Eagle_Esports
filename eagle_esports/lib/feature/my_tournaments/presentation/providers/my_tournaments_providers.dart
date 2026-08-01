@@ -25,17 +25,18 @@ final completedTournamentsProvider =
       return rows.map(Tournament.fromMap).toList();
     });
 
-final activeTournamentsProvider =
-    FutureProvider.autoDispose<List<Tournament>>((ref) async {
-      final userId = ref.watch(authNotifierProvider).value?.user.id;
-      if (userId == null) {
-        return [];
-      }
+final activeTournamentsProvider = FutureProvider.autoDispose<List<Tournament>>((
+  ref,
+) async {
+  final userId = ref.watch(authNotifierProvider).value?.user.id;
+  if (userId == null) {
+    return [];
+  }
 
-      final repository = ref.watch(myTournamentsRepositoryProvider);
-      final rows = await repository.fetchActiveTournaments(userId);
-      return rows.map(Tournament.fromMap).toList();
-    });
+  final repository = ref.watch(myTournamentsRepositoryProvider);
+  final rows = await repository.fetchActiveTournaments(userId);
+  return rows.map(Tournament.fromMap).toList();
+});
 
 final userTeamForTournamentProvider = FutureProvider.autoDispose
     .family<Team?, String>((ref, tournamentId) async {

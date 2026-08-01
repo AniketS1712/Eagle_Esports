@@ -28,15 +28,10 @@ class TeamMember {
   /// to false in DB — the leader's row is auto-created by a trigger
   /// when the team is created, so you never insert that one manually.
   Map<String, dynamic> toMap() {
-    return {
-      'team_id': teamId,
-      'user_id': userId,
-    };
+    return {'team_id': teamId, 'user_id': userId};
   }
 
-  TeamMember copyWith({
-    bool? isLeader,
-  }) {
+  TeamMember copyWith({bool? isLeader}) {
     return TeamMember(
       id: id,
       teamId: teamId,

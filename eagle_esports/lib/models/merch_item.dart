@@ -1,11 +1,5 @@
 /// Mirrors the `merch_items` table — single platform-wide store.
-enum MerchCategory {
-  giftCards,
-  apparel,
-  accessories,
-  gamingGear,
-  collectibles,
-}
+enum MerchCategory { giftCards, apparel, accessories, gamingGear, collectibles }
 
 MerchCategory _merchCategoryFromString(String value) {
   switch (value) {

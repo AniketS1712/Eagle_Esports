@@ -4,11 +4,7 @@ import 'package:eagle_esports/models/merch_item.dart';
 
 /// Card displaying a merch item summary in the store grid.
 class MerchItemCard extends StatelessWidget {
-  const MerchItemCard({
-    required this.item,
-    required this.onTap,
-    super.key,
-  });
+  const MerchItemCard({required this.item, required this.onTap, super.key});
 
   final MerchItem item;
   final VoidCallback onTap;

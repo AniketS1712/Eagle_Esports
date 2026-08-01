@@ -83,9 +83,7 @@ class WalletTransaction {
 
   // No toMap() — this table is never written to directly from Flutter.
 
-  WalletTransaction copyWith({
-    WalletTxStatus? status,
-  }) {
+  WalletTransaction copyWith({WalletTxStatus? status}) {
     return WalletTransaction(
       id: id,
       walletId: walletId,

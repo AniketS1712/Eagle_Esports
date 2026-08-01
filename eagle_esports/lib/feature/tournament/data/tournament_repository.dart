@@ -93,6 +93,8 @@ class TournamentRepository {
         .from('tournament_rooms')
         .stream(primaryKey: ['id'])
         .eq('tournament_id', tournamentId)
-        .map((data) => data.isEmpty ? null : TournamentRoom.fromMap(data.first));
+        .map(
+          (data) => data.isEmpty ? null : TournamentRoom.fromMap(data.first),
+        );
   }
 }

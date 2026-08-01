@@ -51,7 +51,8 @@ class TournamentStatCard extends StatelessWidget {
               Expanded(
                 child: _StatColumn(
                   label: 'Revenue',
-                  value: '${(tournament.entryFee * tournament.filledSlots).toStringAsFixed(0)} T',
+                  value:
+                      '${(tournament.entryFee * tournament.filledSlots).toStringAsFixed(0)} T',
                   isRevenue: true,
                 ),
               ),
@@ -68,7 +69,9 @@ class TournamentStatCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
-                  DateFormat('dd MMM yyyy • HH:mm').format(tournament.startTime!),
+                  DateFormat(
+                    'dd MMM yyyy • HH:mm',
+                  ).format(tournament.startTime!),
                   style: AppTextStyles.caption,
                 ),
               ],
@@ -96,10 +99,7 @@ class _StatColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppTextStyles.caption,
-        ),
+        Text(label, style: AppTextStyles.caption),
         Text(
           value,
           style: isRevenue

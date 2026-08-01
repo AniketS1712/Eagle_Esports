@@ -11,10 +11,7 @@ class MerchRepository {
   /// Fetches all active merch items ordered by created_at descending.
   /// Optionally filtered by [category] string (e.g. 'gift_cards').
   Future<List<MerchItem>> fetchMerchItems({String? category}) async {
-    var query = _client
-        .from('merch_items')
-        .select()
-        .eq('is_active', true);
+    var query = _client.from('merch_items').select().eq('is_active', true);
 
     if (category != null) {
       query = query.eq('category', category);

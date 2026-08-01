@@ -38,9 +38,7 @@ class WalletRepository {
         .eq('user_id', userId)
         .order('created_at', ascending: false)
         .limit(limit)
-        .then(
-          (data) => data.map((r) => WalletTransaction.fromMap(r)).toList(),
-        );
+        .then((data) => data.map((r) => WalletTransaction.fromMap(r)).toList());
   }
 
   /// Fetches all active topup options ordered by [sort_order] ascending.

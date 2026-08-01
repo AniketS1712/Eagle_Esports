@@ -8,10 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OrganiserTournamentList extends ConsumerWidget {
-  const OrganiserTournamentList({
-    required this.selectedStatus,
-    super.key,
-  });
+  const OrganiserTournamentList({required this.selectedStatus, super.key});
 
   final String selectedStatus;
 
@@ -22,10 +19,7 @@ class OrganiserTournamentList extends ConsumerWidget {
     return tournamentsAsync.when(
       loading: () => const Center(child: SegmentedLoader(activeSegment: 4)),
       error: (error, stackTrace) => Center(
-        child: Text(
-          "Couldn't load tournaments",
-          style: AppTextStyles.bodyMd,
-        ),
+        child: Text("Couldn't load tournaments", style: AppTextStyles.bodyMd),
       ),
       data: (tournaments) {
         final filteredTournaments = tournaments.where((t) {
@@ -47,17 +41,20 @@ class OrganiserTournamentList extends ConsumerWidget {
 
         if (filteredTournaments.isEmpty) {
           return const Center(
-            child: Text(
-              'No tournaments found',
-              style: AppTextStyles.bodyMd,
-            ),
+            child: Text('No tournaments found', style: AppTextStyles.bodyMd),
           );
         }
 
         return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(0, AppSpacing.xs, 0, AppSpacing.xxxl),
+          padding: const EdgeInsets.fromLTRB(
+            0,
+            AppSpacing.xs,
+            0,
+            AppSpacing.xxxl,
+          ),
           itemCount: filteredTournaments.length,
-          separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.lg),
+          separatorBuilder: (context, index) =>
+              const SizedBox(height: AppSpacing.lg),
           itemBuilder: (context, index) {
             final tournament = filteredTournaments[index];
             return TournamentListItem(

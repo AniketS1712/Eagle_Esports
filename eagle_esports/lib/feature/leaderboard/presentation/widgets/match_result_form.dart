@@ -31,12 +31,10 @@ class _MatchResultFormState extends ConsumerState<MatchResultForm>
   void initState() {
     super.initState();
     _placementCtrls = {
-      for (final t in widget.teams)
-        t['id'] as String: TextEditingController(),
+      for (final t in widget.teams) t['id'] as String: TextEditingController(),
     };
     _killsCtrls = {
-      for (final t in widget.teams)
-        t['id'] as String: TextEditingController(),
+      for (final t in widget.teams) t['id'] as String: TextEditingController(),
     };
   }
 
@@ -93,11 +91,7 @@ class _MatchResultFormState extends ConsumerState<MatchResultForm>
         return;
       }
 
-      results.add({
-        'teamId': id,
-        'placement': placement,
-        'kills': kills,
-      });
+      results.add({'teamId': id, 'placement': placement, 'kills': kills});
     }
 
     try {
@@ -111,8 +105,7 @@ class _MatchResultFormState extends ConsumerState<MatchResultForm>
   }
 
   void _snack(String msg) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(msg)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   @override

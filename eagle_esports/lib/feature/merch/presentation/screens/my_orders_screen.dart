@@ -44,8 +44,10 @@ class MyOrdersScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text('Could not load orders',
-                            style: AppTextStyles.bodyMd),
+                        const Text(
+                          'Could not load orders',
+                          style: AppTextStyles.bodyMd,
+                        ),
                         TextButton(
                           onPressed: () => ref.invalidate(myOrdersProvider),
                           child: const Text('Retry'),
@@ -64,8 +66,10 @@ class MyOrdersScreen extends ConsumerWidget {
                                 color: AppColors.outline,
                               ),
                               SizedBox(height: AppSpacing.md),
-                              Text('No orders yet',
-                                  style: AppTextStyles.bodyMd),
+                              Text(
+                                'No orders yet',
+                                style: AppTextStyles.bodyMd,
+                              ),
                               SizedBox(height: AppSpacing.xs),
                               Text(
                                 'Redeem items from the merch store',
@@ -119,10 +123,7 @@ class _OrderCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Text(
-                  'Order #$idSubstring',
-                  style: AppTextStyles.bodyMd,
-                ),
+                child: Text('Order #$idSubstring', style: AppTextStyles.bodyMd),
               ),
               StatusBadge(status: liveOrder.status.name),
             ],
@@ -160,9 +161,9 @@ class _OrderCard extends ConsumerWidget {
                 Clipboard.setData(
                   ClipboardData(text: liveOrder.fulfillmentNote!),
                 );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Code copied!')),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Code copied!')));
               },
               child: Row(
                 children: [

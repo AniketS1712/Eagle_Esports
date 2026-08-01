@@ -24,10 +24,7 @@ class PreviewTournamentSummary extends StatelessWidget {
             label: 'Prize Pool',
             value: '₹${tournament.prizePool.round()}',
           ),
-          _SummaryRow(
-            label: 'Max Slots',
-            value: '${tournament.maxSlots}',
-          ),
+          _SummaryRow(label: 'Max Slots', value: '${tournament.maxSlots}'),
           if (tournament.description?.isNotEmpty == true) ...[
             const SizedBox(height: AppSpacing.md),
             Text('Description', style: AppTextStyles.labelMd),

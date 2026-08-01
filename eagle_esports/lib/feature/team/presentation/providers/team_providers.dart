@@ -37,13 +37,15 @@ final userTeamIdForTournamentProvider = FutureProvider.autoDispose
       );
     });
 
-final userJoinedTournamentIdsProvider = FutureProvider.autoDispose<Set<String>>((ref) async {
-  final session = await ref.watch(authNotifierProvider.future);
-  if (session == null) return {};
+final userJoinedTournamentIdsProvider = FutureProvider.autoDispose<Set<String>>(
+  (ref) async {
+    final session = await ref.watch(authNotifierProvider.future);
+    if (session == null) return {};
 
-  final repository = ref.watch(teamRepositoryProvider);
-  return repository.getUserJoinedTournamentIds(session.user.id);
-});
+    final repository = ref.watch(teamRepositoryProvider);
+    return repository.getUserJoinedTournamentIds(session.user.id);
+  },
+);
 
 final teamActionsProvider = AsyncNotifierProvider<TeamActionsNotifier, void>(
   TeamActionsNotifier.new,

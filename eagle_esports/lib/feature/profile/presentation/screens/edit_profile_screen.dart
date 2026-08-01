@@ -41,14 +41,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
     final userId = ref.read(authNotifierProvider).value?.user.id;
     if (userId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please sign in again')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please sign in again')));
       return;
     }
 
     try {
-      await ref.read(profileEditProvider.notifier).updateProfile(
+      await ref
+          .read(profileEditProvider.notifier)
+          .updateProfile(
             userId: userId,
             fullName: _nameController.text.trim(),
             phone: _phoneController.text.trim(),
@@ -57,9 +59,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       if (mounted) context.pop();
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
       }
     }
   }
@@ -79,10 +81,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       icon: const Icon(Icons.arrow_back_ios_new),
                       onPressed: () => context.pop(),
                     ),
-                    Text(
-                      'Edit Profile',
-                      style: AppTextStyles.headlineLgMobile,
-                    ),
+                    Text('Edit Profile', style: AppTextStyles.headlineLgMobile),
                   ],
                 ),
               ),
@@ -97,8 +96,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         AvatarPicker(
                           currentAvatarUrl: _avatarUrl,
                           isUploading: _isAvatarUploading,
-                          onUploaded: (url) =>
-                              setState(() => _avatarUrl = url),
+                          onUploaded: (url) => setState(() => _avatarUrl = url),
                         ),
                         const SizedBox(height: AppSpacing.xl),
                         AppTextField(
@@ -127,8 +125,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         const SizedBox(height: AppSpacing.xl),
                         Consumer(
                           builder: (context, ref, _) {
-                            final isLoading =
-                                ref.watch(profileEditProvider).isLoading;
+                            final isLoading = ref
+                                .watch(profileEditProvider)
+                                .isLoading;
                             return PrimaryGradientButton(
                               text: 'SAVE CHANGES',
                               isLoading: isLoading,

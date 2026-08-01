@@ -26,12 +26,13 @@ class TournamentListItem extends StatelessWidget {
       slotsTotal: tournament.maxSlots,
       slotsFilled: tournament.filledSlots,
       status: tournament.status.name,
-      onTap: onTap ??
+      onTap:
+          onTap ??
           () => context.pushNames(
-                RouteNames.tournamentDetails,
-                pathParameters: {'id': tournament.id},
-                extra: {'isJoined': isJoined},
-              ),
+            RouteNames.tournamentDetails,
+            pathParameters: {'id': tournament.id},
+            extra: {'isJoined': isJoined},
+          ),
     );
   }
 

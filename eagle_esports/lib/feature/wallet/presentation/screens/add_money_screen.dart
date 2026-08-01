@@ -26,9 +26,32 @@ class _AddMoneyScreenState extends ConsumerState<AddMoneyScreen> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    debugPrint('[Razorpay] SUCCESS paymentId=${response.paymentId}');
-    _ref.read(walletActionsProvider.notifier).handlePaymentSuccess();
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    final userId = ref.read(authNotifierProvider).value?.user.id;
+    final selectedAmount = ref.read(selectedTopupAmountProvider);
+
+    if (userId != null &&
+        selectedAmount != null &&
+        response.paymentId != null &&
+        response.orderId != null &&
+        response.signature != null) {
+      try {
+        await ref
+            .read(walletActionsProvider.notifier)
+            .confirmPayment(
+              paymentId: response.paymentId!,
+              orderId: response.orderId!,
+              signature: response.signature!,
+              userId: userId,
+              amount: selectedAmount,
+            );
+      } catch (e) {
+        _ref.read(walletActionsProvider.notifier).handlePaymentSuccess();
+      }
+    } else {
+      _ref.read(walletActionsProvider.notifier).handlePaymentSuccess();
+    }
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Payment successful! Talons added.')),
@@ -40,9 +63,6 @@ class _AddMoneyScreenState extends ConsumerState<AddMoneyScreen> {
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    debugPrint(
-      '[Razorpay] ERROR code=${response.code} message=${response.message}',
-    );
     final message = response.message ?? 'Payment failed';
     _ref.read(walletActionsProvider.notifier).handlePaymentError(message);
     if (mounted) {
@@ -53,7 +73,6 @@ class _AddMoneyScreenState extends ConsumerState<AddMoneyScreen> {
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    debugPrint('[Razorpay] EXTERNAL_WALLET name=${response.walletName}');
     // External wallets (Paytm etc.) are handled the same as error
     // for now — user can retry with card/UPI.
     if (mounted) {
@@ -222,15 +241,11 @@ class _AddMoneyScreenState extends ConsumerState<AddMoneyScreen> {
                             onPressed: selected == null || isLoading
                                 ? null
                                 : () async {
-                                    debugPrint(
-                                      '[AddMoney] Pay tapped amount=$selected',
-                                    );
                                     final userId = ref
                                         .read(authNotifierProvider)
                                         .value
                                         ?.user
                                         .id;
-                                    debugPrint('[AddMoney] userId=$userId');
                                     if (userId == null) {
                                       ScaffoldMessenger.of(
                                         context,
@@ -253,7 +268,7 @@ class _AddMoneyScreenState extends ConsumerState<AddMoneyScreen> {
                                             },
                                           );
                                     } catch (e) {
-                                      if (mounted) {
+                                      if (context.mounted) {
                                         ScaffoldMessenger.of(
                                           context,
                                         ).showSnackBar(

@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TeamRoomInviteCard extends StatelessWidget {
-  const TeamRoomInviteCard({
-    required this.inviteCode,
-    super.key,
-  });
+  const TeamRoomInviteCard({required this.inviteCode, super.key});
 
   final String inviteCode;
 
@@ -38,9 +35,7 @@ class TeamRoomInviteCard extends StatelessWidget {
                   ),
                   child: Text(
                     inviteCode,
-                    style: AppTextStyles.numberMd.copyWith(
-                      letterSpacing: 4,
-                    ),
+                    style: AppTextStyles.numberMd.copyWith(letterSpacing: 4),
                   ),
                 ),
               ),

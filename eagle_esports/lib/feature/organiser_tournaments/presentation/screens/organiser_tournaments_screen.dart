@@ -38,9 +38,7 @@ class _OrganiserTournamentsScreenState
               ),
               const SizedBox(height: AppSpacing.sm),
               Expanded(
-                child: OrganiserTournamentList(
-                  selectedStatus: _selectedStatus,
-                ),
+                child: OrganiserTournamentList(selectedStatus: _selectedStatus),
               ),
             ],
           ),

@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:eagle_esports/feature/auth/presentation/providers/auth_providers.dart';
 import 'package:eagle_esports/feature/wallet/data/wallet_repository.dart';
 import 'package:eagle_esports/models/wallet.dart';
@@ -63,10 +60,8 @@ class SelectedTopupAmountNotifier extends Notifier<double?> {
   void clear() => state = null;
 }
 
-/// Handles wallet actions such as initiating a topup.
-///
-/// Actual payment integration (Razorpay via Node.js) is stubbed until
-/// the backend is ready.
+/// Handles wallet actions such as initiating a topup via Razorpay
+/// and confirming the payment through the Node.js backend.
 final walletActionsProvider =
     AsyncNotifierProvider<WalletActionsNotifier, void>(
       WalletActionsNotifier.new,
@@ -96,28 +91,52 @@ class WalletActionsNotifier extends AsyncNotifier<void> {
       final service = ref.read(paymentServiceProvider);
       final order = await service.createOrder(amount: amount, userId: userId);
 
+      final keyId = order['keyId'] ?? order['key'] ?? order['key_id'] ?? '';
+      final orderId =
+          order['orderId'] ?? order['order_id'] ?? order['id'] ?? '';
+
       // Build Razorpay options map and pass back to the screen
       // via callback — Razorpay.open() must be called from a widget
       // context, not from a provider.
       final options = <String, dynamic>{
-        'key': order['keyId'],
-        'order_id': order['orderId'],
-        'amount': (amount * 100).toInt(),
-        'currency': 'INR',
+        'key': keyId,
+        'order_id': orderId,
+        'amount': order['amount'] ?? (amount * 100).toInt(),
+        'currency': order['currency'] ?? 'INR',
         'name': 'Eagle Esport',
         'description': 'Wallet Top-up',
         'prefill': {'contact': '', 'email': ''},
       };
 
       onCheckoutReady(options);
-      debugPrint('[Payment] onCheckoutReady called with options=$options');
-      // Do NOT set state = AsyncData here — the notifier stays in
-      // loading state until the screen calls handlePaymentSuccess
-      // or handlePaymentError below.
     });
   }
 
-  /// Called by the screen on Razorpay.EVENT_PAYMENT_SUCCESS.
+  /// Called when Razorpay checkout completes, confirming the payment with backend
+  /// and invalidating providers to update Talon balance immediately.
+  Future<void> confirmPayment({
+    required String paymentId,
+    required String orderId,
+    required String signature,
+    required String userId,
+    required double amount,
+  }) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final service = ref.read(paymentServiceProvider);
+      await service.confirmPayment(
+        razorpayPaymentId: paymentId,
+        razorpayOrderId: orderId,
+        razorpaySignature: signature,
+        userId: userId,
+        amount: amount,
+      );
+      ref.invalidate(walletStreamProvider);
+      ref.invalidate(walletTransactionsProvider);
+    });
+  }
+
+  /// Called by the screen on Razorpay.EVENT_PAYMENT_SUCCESS fallback.
   void handlePaymentSuccess() {
     state = const AsyncData(null);
 

@@ -6,10 +6,7 @@ import 'package:intl/intl.dart';
 class TransactionDetailsScreen extends StatelessWidget {
   final WalletTransaction transaction;
 
-  const TransactionDetailsScreen({
-    super.key,
-    required this.transaction,
-  });
+  const TransactionDetailsScreen({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -81,16 +78,12 @@ class TransactionDetailsScreen extends StatelessWidget {
           ),
           _DetailRow(
             label: 'Date',
-            value: DateFormat('dd MMM yyyy • HH:mm').format(transaction.createdAt),
+            value: DateFormat(
+              'dd MMM yyyy • HH:mm',
+            ).format(transaction.createdAt),
           ),
-          _DetailRow(
-            label: 'Type',
-            value: transaction.type.name.toUpperCase(),
-          ),
-          _DetailRow(
-            label: 'Category',
-            value: _label(transaction),
-          ),
+          _DetailRow(label: 'Type', value: transaction.type.name.toUpperCase()),
+          _DetailRow(label: 'Category', value: _label(transaction)),
           _DetailRow(
             label: 'Status',
             value: transaction.status.name.toUpperCase(),
@@ -100,10 +93,7 @@ class TransactionDetailsScreen extends StatelessWidget {
             value: '${transaction.balanceAfter.toStringAsFixed(0)} T',
           ),
           if (transaction.description != null)
-            _DetailRow(
-              label: 'Note',
-              value: transaction.description!,
-            ),
+            _DetailRow(label: 'Note', value: transaction.description!),
         ],
       ),
     );

@@ -12,8 +12,8 @@ final merchRepositoryProvider = Provider<MerchRepository>((ref) {
 /// Tracks the currently selected category filter (null = All).
 final selectedMerchCategoryProvider =
     NotifierProvider<SelectedMerchCategoryNotifier, String?>(
-  SelectedMerchCategoryNotifier.new,
-);
+      SelectedMerchCategoryNotifier.new,
+    );
 
 class SelectedMerchCategoryNotifier extends Notifier<String?> {
   @override
@@ -24,39 +24,36 @@ class SelectedMerchCategoryNotifier extends Notifier<String?> {
 }
 
 /// Fetches active merch items, optionally filtered by category.
-final merchItemsProvider =
-    FutureProvider.autoDispose.family<List<MerchItem>, String?>((
-  ref,
-  category,
-) {
-  return ref.watch(merchRepositoryProvider).fetchMerchItems(
-    category: category,
-  );
-});
+final merchItemsProvider = FutureProvider.autoDispose
+    .family<List<MerchItem>, String?>((ref, category) {
+      return ref
+          .watch(merchRepositoryProvider)
+          .fetchMerchItems(category: category);
+    });
 
 /// Fetches a single merch item by id.
-final merchItemDetailProvider =
-    FutureProvider.autoDispose.family<MerchItem, String>((ref, itemId) {
-  return ref.watch(merchRepositoryProvider).fetchMerchItemById(itemId);
-});
+final merchItemDetailProvider = FutureProvider.autoDispose
+    .family<MerchItem, String>((ref, itemId) {
+      return ref.watch(merchRepositoryProvider).fetchMerchItemById(itemId);
+    });
 
 /// Fetches all orders for the authenticated user.
-final myOrdersProvider =
-    FutureProvider.autoDispose<List<MerchOrder>>((ref) async {
+final myOrdersProvider = FutureProvider.autoDispose<List<MerchOrder>>((
+  ref,
+) async {
   final userId = ref.watch(authNotifierProvider).value?.user.id;
   if (userId == null) return [];
   return ref.watch(merchRepositoryProvider).fetchMyOrders(userId);
 });
 
 /// Streams a single order for live status updates.
-final orderWatchProvider =
-    StreamProvider.autoDispose.family<MerchOrder, String>((ref, orderId) {
-  return ref.watch(merchRepositoryProvider).watchOrder(orderId);
-});
+final orderWatchProvider = StreamProvider.autoDispose
+    .family<MerchOrder, String>((ref, orderId) {
+      return ref.watch(merchRepositoryProvider).watchOrder(orderId);
+    });
 
 /// Handles merch purchase actions (place order).
-final merchActionsProvider =
-    AsyncNotifierProvider<MerchActionsNotifier, void>(
+final merchActionsProvider = AsyncNotifierProvider<MerchActionsNotifier, void>(
   MerchActionsNotifier.new,
 );
 

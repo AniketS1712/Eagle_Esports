@@ -27,9 +27,7 @@ class Wallet {
   /// to directly from Flutter. All balance changes go through
   /// supabase.rpc('pay_tournament_entry', ...) or similar functions.
 
-  Wallet copyWith({
-    double? talonBalance,
-  }) {
+  Wallet copyWith({double? talonBalance}) {
     return Wallet(
       id: id,
       userId: userId,

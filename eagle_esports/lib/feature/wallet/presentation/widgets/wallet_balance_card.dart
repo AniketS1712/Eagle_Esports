@@ -40,7 +40,9 @@ class WalletBalanceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  wallet != null ? wallet!.talonBalance.toStringAsFixed(0) : '—',
+                  wallet != null
+                      ? wallet!.talonBalance.toStringAsFixed(0)
+                      : '—',
                   style: AppTextStyles.numberXl.copyWith(
                     color: AppColors.electricCyan,
                   ),
@@ -58,10 +60,7 @@ class WalletBalanceCard extends StatelessWidget {
               ],
             ),
           const SizedBox(height: AppSpacing.xs),
-          const Text(
-            '1 Talon = ₹1',
-            style: AppTextStyles.caption,
-          ),
+          const Text('1 Talon = ₹1', style: AppTextStyles.caption),
         ],
       ),
     );

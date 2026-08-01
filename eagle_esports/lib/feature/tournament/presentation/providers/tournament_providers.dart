@@ -55,11 +55,11 @@ final tournamentDetailProvider = StreamProvider.family<Tournament, String>((
   return repository.watchTournamentById(id);
 });
 
-final tournamentRoomProvider =
-    StreamProvider.autoDispose.family<TournamentRoom?, String>((ref, tournamentId) {
-  final repository = ref.watch(tournamentRepositoryProvider);
-  return repository.watchTournamentRoom(tournamentId);
-});
+final tournamentRoomProvider = StreamProvider.autoDispose
+    .family<TournamentRoom?, String>((ref, tournamentId) {
+      final repository = ref.watch(tournamentRepositoryProvider);
+      return repository.watchTournamentRoom(tournamentId);
+    });
 
 class TournamentActionsNotifier extends AsyncNotifier<void> {
   @override

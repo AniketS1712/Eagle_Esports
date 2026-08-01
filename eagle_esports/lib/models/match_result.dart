@@ -46,10 +46,7 @@ class MatchResult {
     };
   }
 
-  MatchResult copyWith({
-    int? placement,
-    int? kills,
-  }) {
+  MatchResult copyWith({int? placement, int? kills}) {
     return MatchResult(
       id: id,
       matchId: matchId,

@@ -8,10 +8,7 @@ import 'package:eagle_esports/feature/team/presentation/widgets/team_card.dart';
 class RegisteredTeamsScreen extends ConsumerWidget {
   final String tournamentId;
 
-  const RegisteredTeamsScreen({
-    super.key,
-    required this.tournamentId,
-  });
+  const RegisteredTeamsScreen({super.key, required this.tournamentId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

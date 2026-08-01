@@ -17,8 +17,11 @@ app.use('/verify-payment', express.raw({ type: 'application/json' }))
 
 const createOrderRouter = require('./src/routes/create_order')
 const verifyPaymentRouter = require('./src/routes/verify_payment')
+const confirmPaymentRouter = require('./src/routes/confirm_payment')
+
 app.use('/create-order', createOrderRouter)
 app.use('/verify-payment', verifyPaymentRouter)
+app.use('/confirm-payment', confirmPaymentRouter)
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })

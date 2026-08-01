@@ -10,10 +10,7 @@ import 'package:eagle_esports/models/merch_item.dart';
 
 /// Screen displaying detailed information and purchasing options for a merch item.
 class MerchItemDetailScreen extends ConsumerStatefulWidget {
-  const MerchItemDetailScreen({
-    required this.itemId,
-    super.key,
-  });
+  const MerchItemDetailScreen({required this.itemId, super.key});
 
   final String itemId;
 
@@ -22,8 +19,7 @@ class MerchItemDetailScreen extends ConsumerStatefulWidget {
       _MerchItemDetailScreenState();
 }
 
-class _MerchItemDetailScreenState
-    extends ConsumerState<MerchItemDetailScreen> {
+class _MerchItemDetailScreenState extends ConsumerState<MerchItemDetailScreen> {
   int _quantity = 1;
 
   String _categoryLabel(MerchCategory cat) {
@@ -42,12 +38,15 @@ class _MerchItemDetailScreenState
   }
 
   Future<void> _redeem(
-      BuildContext context, WidgetRef ref, MerchItem item) async {
+    BuildContext context,
+    WidgetRef ref,
+    MerchItem item,
+  ) async {
     final userId = ref.read(authNotifierProvider).value?.user.id;
     if (userId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please sign in again')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please sign in again')));
       return;
     }
 
@@ -63,13 +62,17 @@ class _MerchItemDetailScreenState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('Cancel',
-                style: TextStyle(color: AppColors.onSurfaceVariant)),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: AppColors.onSurfaceVariant),
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Confirm',
-                style: TextStyle(color: AppColors.electricCyan)),
+            child: const Text(
+              'Confirm',
+              style: TextStyle(color: AppColors.electricCyan),
+            ),
           ),
         ],
       ),
@@ -79,7 +82,9 @@ class _MerchItemDetailScreenState
     if (!context.mounted) return;
 
     try {
-      await ref.read(merchActionsProvider.notifier).placeOrder(
+      await ref
+          .read(merchActionsProvider.notifier)
+          .placeOrder(
             userId: userId,
             merchItemId: item.id,
             quantity: _quantity,
@@ -93,9 +98,9 @@ class _MerchItemDetailScreenState
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }
@@ -114,12 +119,14 @@ class _MerchItemDetailScreenState
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('Could not load item details',
-                    style: AppTextStyles.bodyMd),
+                const Text(
+                  'Could not load item details',
+                  style: AppTextStyles.bodyMd,
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 TextButton(
-                  onPressed: () => ref
-                      .invalidate(merchItemDetailProvider(widget.itemId)),
+                  onPressed: () =>
+                      ref.invalidate(merchItemDetailProvider(widget.itemId)),
                   child: const Text('Retry'),
                 ),
               ],
@@ -150,8 +157,9 @@ class _MerchItemDetailScreenState
                       children: [
                         Text(
                           '${item.price.toStringAsFixed(0)} T',
-                          style: AppTextStyles.numberXl
-                              .copyWith(color: AppColors.electricCyan),
+                          style: AppTextStyles.numberXl.copyWith(
+                            color: AppColors.electricCyan,
+                          ),
                         ),
                         Text(
                           '${item.stockQuantity} in stock',
@@ -175,8 +183,10 @@ class _MerchItemDetailScreenState
                           color: AppColors.surfaceContainerHigh,
                           borderRadius: AppRadius.radiusFull,
                         ),
-                        child: Text(_categoryLabel(item.category),
-                            style: AppTextStyles.badgeLabel),
+                        child: Text(
+                          _categoryLabel(item.category),
+                          style: AppTextStyles.badgeLabel,
+                        ),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.lg),
@@ -201,8 +211,7 @@ class _MerchItemDetailScreenState
                                     : null,
                               ),
                               const SizedBox(width: AppSpacing.md),
-                              Text('$_quantity',
-                                  style: AppTextStyles.numberMd),
+                              Text('$_quantity', style: AppTextStyles.numberMd),
                               const SizedBox(width: AppSpacing.md),
                               IconActionButton(
                                 icon: Icons.add,
@@ -223,8 +232,9 @@ class _MerchItemDetailScreenState
                           Text('Total cost', style: AppTextStyles.bodyMd),
                           Text(
                             '${(item.price * _quantity).toStringAsFixed(0)} T',
-                            style: AppTextStyles.numberMd
-                                .copyWith(color: AppColors.electricCyan),
+                            style: AppTextStyles.numberMd.copyWith(
+                              color: AppColors.electricCyan,
+                            ),
                           ),
                         ],
                       ),
@@ -232,8 +242,9 @@ class _MerchItemDetailScreenState
                     const SizedBox(height: AppSpacing.xl),
                     Consumer(
                       builder: (context, ref, _) {
-                        final isLoading =
-                            ref.watch(merchActionsProvider).isLoading;
+                        final isLoading = ref
+                            .watch(merchActionsProvider)
+                            .isLoading;
                         return PrimaryGradientButton(
                           text: item.stockQuantity <= 0
                               ? 'OUT OF STOCK'

@@ -45,7 +45,9 @@ class TransactionListItem extends StatelessWidget {
                   Text(_label(transaction), style: AppTextStyles.bodyMd),
                   const SizedBox(height: 2),
                   Text(
-                    DateFormat('dd MMM yyyy • HH:mm').format(transaction.createdAt),
+                    DateFormat(
+                      'dd MMM yyyy • HH:mm',
+                    ).format(transaction.createdAt),
                     style: AppTextStyles.caption,
                   ),
                 ],

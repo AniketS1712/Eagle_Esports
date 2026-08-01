@@ -76,8 +76,9 @@ class ActiveTournamentCard extends StatelessWidget {
                       if (tournament.startTime != null)
                         _InfoChip(
                           Icons.schedule_outlined,
-                          DateFormat('dd MMM • HH:mm')
-                              .format(tournament.startTime!),
+                          DateFormat(
+                            'dd MMM • HH:mm',
+                          ).format(tournament.startTime!),
                         ),
                     ],
                   ),

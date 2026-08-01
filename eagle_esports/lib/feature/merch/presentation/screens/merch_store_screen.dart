@@ -71,7 +71,9 @@ class MerchStoreScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.md),
               Expanded(
-                child: ref.watch(merchItemsProvider(selectedCategory)).when(
+                child: ref
+                    .watch(merchItemsProvider(selectedCategory))
+                    .when(
                       loading: () => const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.electricCyan,
@@ -122,11 +124,11 @@ class MerchStoreScreen extends ConsumerWidget {
                               ),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: AppSpacing.sm,
-                                mainAxisSpacing: AppSpacing.sm,
-                                childAspectRatio: 0.72,
-                              ),
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: AppSpacing.sm,
+                                    mainAxisSpacing: AppSpacing.sm,
+                                    childAspectRatio: 0.72,
+                                  ),
                               itemCount: items.length,
                               itemBuilder: (_, i) => MerchItemCard(
                                 item: items[i],

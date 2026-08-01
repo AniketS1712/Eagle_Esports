@@ -3,10 +3,7 @@ import 'package:eagle_esports/core/theme/theme.dart';
 
 /// Image carousel widget for merch item details screen.
 class MerchImageCarousel extends StatefulWidget {
-  const MerchImageCarousel({
-    required this.images,
-    super.key,
-  });
+  const MerchImageCarousel({required this.images, super.key});
 
   final List<String> images;
 

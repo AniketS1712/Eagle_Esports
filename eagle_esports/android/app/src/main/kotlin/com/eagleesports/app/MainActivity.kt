@@ -1,4 +1,4 @@
-package com.example.eagle_esports
+package com.eagleesports.app
 
 import io.flutter.embedding.android.FlutterActivity
 

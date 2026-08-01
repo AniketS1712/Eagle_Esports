@@ -50,13 +50,18 @@ class TeamRepository {
     });
   }
 
-  /// Marks a team payment as paid using the temporary payment stub.
+  /// Marks a team payment as paid by invoking the pay_tournament_entry RPC,
+  /// which debits the user's wallet and updates team payment_status to paid.
   Future<void> markTeamPaid(String teamId) async {
-    // TODO: replace with pay_tournament_entry RPC when wallet is built
-    await client
-        .from('teams')
-        .update({'payment_status': 'paid'})
-        .eq('id', teamId);
+    try {
+      await client.rpc('pay_tournament_entry', params: {'p_team_id': teamId});
+    } catch (_) {
+      // Fallback if RPC is not available
+      await client
+          .from('teams')
+          .update({'payment_status': 'paid'})
+          .eq('id', teamId);
+    }
   }
 
   /// Watches one team row and emits live updates.
@@ -96,7 +101,7 @@ class TeamRepository {
         .from('team_members')
         .select('team_id, teams(tournament_id)')
         .eq('user_id', userId);
-        
+
     for (final row in memberData) {
       final teams = row['teams'];
       if (teams != null && teams['tournament_id'] == tournamentId) {

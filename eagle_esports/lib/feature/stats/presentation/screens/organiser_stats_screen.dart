@@ -17,7 +17,8 @@ class OrganiserStatsScreen extends ConsumerWidget {
       body: AppBackground(
         child: SafeArea(
           child: tournamentsAsync.when(
-            loading: () => const Center(child: SegmentedLoader(activeSegment: 3)),
+            loading: () =>
+                const Center(child: SegmentedLoader(activeSegment: 3)),
             error: (error, stackTrace) => Center(
               child: Text(
                 'Failed to load statistics',
