@@ -1,6 +1,3 @@
-import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
-
 class RouteNames {
   RouteNames._();
 
@@ -35,34 +32,4 @@ class RouteNames {
   static const String merchItemDetail = 'merch_item_detail';
   static const String orderConfirmation = 'order_confirmation';
   static const String myOrders = 'my_orders';
-}
-
-extension RouteNamesNavigation on BuildContext {
-  void goNames(
-    String name, {
-    Map<String, String> pathParameters = const {},
-    Map<String, dynamic> queryParameters = const {},
-    Object? extra,
-  }) {
-    goNamed(
-      name,
-      pathParameters: pathParameters,
-      queryParameters: queryParameters,
-      extra: extra,
-    );
-  }
-
-  void pushNames(
-    String name, {
-    Map<String, String> pathParameters = const {},
-    Map<String, dynamic> queryParameters = const {},
-    Object? extra,
-  }) {
-    pushNamed(
-      name,
-      pathParameters: pathParameters,
-      queryParameters: queryParameters,
-      extra: extra,
-    );
-  }
 }

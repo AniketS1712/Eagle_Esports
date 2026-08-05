@@ -2,6 +2,7 @@ import 'package:eagle_esports/core/routes/route_names.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
 import 'package:eagle_esports/models/tournament.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OrganizerTournamentActions extends StatelessWidget {
   const OrganizerTournamentActions({
@@ -66,7 +67,7 @@ class OrganizerTournamentActions extends StatelessWidget {
         if (tournament.status == TournamentStatus.draft)
           SecondaryOutlineButton(
             text: 'Preview Tournament',
-            onPressed: () => context.pushNames(
+            onPressed: () => context.pushNamed(
               RouteNames.previewTournament,
               pathParameters: {'id': tournament.id},
             ),

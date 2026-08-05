@@ -42,6 +42,7 @@ class TournamentRepository {
         .from('tournaments')
         .stream(primaryKey: ['id'])
         .eq('id', id)
+        .where((data) => data.isNotEmpty)
         .map((data) => Tournament.fromMap(data.first));
   }
 

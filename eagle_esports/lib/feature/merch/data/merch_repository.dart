@@ -67,6 +67,7 @@ class MerchRepository {
         .from('merch_orders')
         .stream(primaryKey: ['id'])
         .eq('id', orderId)
+        .where((rows) => rows.isNotEmpty)
         .map((rows) => MerchOrder.fromMap(rows.first));
   }
 }

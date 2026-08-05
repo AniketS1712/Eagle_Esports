@@ -2,6 +2,7 @@ import 'package:eagle_esports/core/routes/route_names.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
 import 'package:eagle_esports/models/tournament.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TournamentListItem extends StatelessWidget {
   const TournamentListItem({
@@ -28,7 +29,7 @@ class TournamentListItem extends StatelessWidget {
       status: tournament.status.name,
       onTap:
           onTap ??
-          () => context.pushNames(
+          () => context.pushNamed(
             RouteNames.tournamentDetails,
             pathParameters: {'id': tournament.id},
             extra: {'isJoined': isJoined},

@@ -11,7 +11,7 @@ class CreateTournamentButton extends StatelessWidget {
     return PrimaryGradientButton(
       text: 'Create Tournament',
       leadingIcon: const Icon(Icons.add_circle_outline, color: Colors.black),
-      onPressed: () => context.goNamed(RouteNames.createTournament),
+      onPressed: () => context.pushNamed(RouteNames.createTournament),
     );
   }
 }

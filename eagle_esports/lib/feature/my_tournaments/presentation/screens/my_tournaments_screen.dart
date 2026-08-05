@@ -7,6 +7,7 @@ import 'package:eagle_esports/feature/my_tournaments/presentation/widgets/tourna
 import 'package:eagle_esports/shared/widgets/user_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MyTournamentsScreen extends ConsumerStatefulWidget {
   const MyTournamentsScreen({super.key});
@@ -129,7 +130,7 @@ class _ActiveTab extends ConsumerWidget {
               separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.lg),
               itemBuilder: (_, i) => ActiveTournamentCard(
                 tournament: items[i],
-                onTap: () => context.pushNames(
+                onTap: () => context.pushNamed(
                   RouteNames.tournamentDetails,
                   pathParameters: {'id': items[i].id},
                 ),

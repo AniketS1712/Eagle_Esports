@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'package:eagle_esports/core/routes/route_names.dart';
+import 'package:eagle_esports/core/routes/route_path.dart';
 import 'package:eagle_esports/feature/auth/presentation/providers/auth_providers.dart';
 import 'package:eagle_esports/feature/splash/widget/corner_hud.dart';
 import 'package:eagle_esports/shared/widgets/eagle_logo.dart';
 import 'package:eagle_esports/shared/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -60,20 +61,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     if (_navigated || !_minDelayElapsed) return;
 
     final authState = ref.read(authNotifierProvider);
-    final authResolved = authState.hasValue || authState.hasError;
-    if (!authResolved) return;
+    if (!authState.hasValue && !authState.hasError) return;
 
-    final session = authState.value;
-    if (session != null) {
-      final profileState = ref.read(profileProvider);
-      final profileResolved = profileState.hasValue || profileState.hasError;
-      if (!profileResolved) return;
-    }
+    // Always check profile — session might exist but profile still loading
+    final profileState = ref.read(profileProvider);
+    if (!profileState.hasValue && !profileState.hasError) return;
 
     _navigated = true;
-    // Any route works here — `redirect` intercepts this and sends
-    // the user to the actually correct destination.
-    context.goNames(RouteNames.home);
+    // go() triggers the router redirect — redirect decides the real
+    // destination based on role. pushNamed() bypasses redirect entirely.
+    context.go(RoutePath.home);
   }
 
   @override

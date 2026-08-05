@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eagle_esports/core/routes/route_names.dart';
+import 'package:eagle_esports/core/routes/route_path.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
 import 'package:eagle_esports/feature/merch/presentation/providers/merch_providers.dart';
 import 'package:eagle_esports/models/merch_order.dart';
@@ -121,12 +122,12 @@ class OrderConfirmationScreen extends ConsumerWidget {
                   const SizedBox(height: AppSpacing.xl),
                   PrimaryGradientButton(
                     text: 'VIEW MY ORDERS',
-                    onPressed: () => context.goNamed(RouteNames.myOrders),
+                    onPressed: () => context.pushNamed(RouteNames.myOrders),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   SecondaryOutlineButton(
                     text: 'BACK TO STORE',
-                    onPressed: () => context.goNamed(RouteNames.merch),
+                    onPressed: () => context.go(RoutePath.merch),
                   ),
                 ],
               ),

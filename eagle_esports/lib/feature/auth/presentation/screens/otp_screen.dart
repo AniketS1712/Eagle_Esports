@@ -1,7 +1,7 @@
-import 'package:eagle_esports/core/routes/route_names.dart';
 import 'package:eagle_esports/shared/widgets/eagle_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -72,7 +72,7 @@ class _OtpScreenState extends State<OtpScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
-          onPressed: () => context.goNames(RouteNames.signup),
+          onPressed: () => context.pop(),
         ),
       ),
       body: AppBackground(

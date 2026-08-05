@@ -5,6 +5,7 @@ import 'package:eagle_esports/feature/tournament/presentation/providers/tourname
 import 'package:eagle_esports/shared/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class RecentTournamentsList extends ConsumerWidget {
   const RecentTournamentsList({super.key});
@@ -33,7 +34,7 @@ class RecentTournamentsList extends ConsumerWidget {
                   padding: const EdgeInsets.only(bottom: AppSpacing.lg),
                   child: TournamentListItem(
                     tournament: tournament,
-                    onTap: () => context.pushNames(
+                    onTap: () => context.pushNamed(
                       RouteNames.organizerTournament,
                       pathParameters: {'id': tournament.id},
                     ),

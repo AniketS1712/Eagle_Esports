@@ -47,11 +47,7 @@ class AppTopBar extends StatelessWidget {
                 IconActionButton(
                   icon: Icons.arrow_back,
                   onPressed: () {
-                    context.goNamed(
-                      backRouteName,
-                      pathParameters: backRouteParams,
-                      extra: backRouteExtra,
-                    );
+                    context.pop();
                   },
                   tooltip: 'Back',
                 ),

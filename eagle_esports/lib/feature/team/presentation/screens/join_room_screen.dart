@@ -23,14 +23,20 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
 
   Future<void> _submit(String inviteCode) async {
     try {
-      final userId = ref.read(authNotifierProvider).value!.user.id;
+      final userId = ref.read(authNotifierProvider).value?.user.id;
+      if (userId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Session expired. Please sign in again.')),
+        );
+        return;
+      }
       final notifier = ref.read(teamActionsProvider.notifier);
 
       await notifier.joinAndPayTeam(inviteCode: inviteCode, userId: userId);
       final teamId = notifier.lastJoinedTeamId;
 
       if (!mounted || teamId == null) return;
-      context.goNamed(RouteNames.teamRoom, pathParameters: {'id': teamId});
+      context.pushNamed(RouteNames.teamRoom, pathParameters: {'id': teamId});
     } catch (error) {
       if (!mounted) return;
       setState(() => _formKey = UniqueKey());

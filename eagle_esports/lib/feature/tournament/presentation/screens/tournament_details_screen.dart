@@ -130,7 +130,7 @@ class _TournamentDetailsBody extends ConsumerWidget {
                       userTeamIdForTournamentProvider(tournament.id).future,
                     );
                 if (teamId != null && context.mounted) {
-                  context.goNamed(
+                  context.pushNamed(
                     RouteNames.teamRoom,
                     pathParameters: {'id': teamId},
                   );
@@ -145,7 +145,7 @@ class _TournamentDetailsBody extends ConsumerWidget {
             bottom: AppSpacing.md,
             child: TournamentDetailsStickyCta(
               text: 'Register for Tournament',
-              onPressed: () => context.goNamed(
+              onPressed: () => context.pushNamed(
                 RouteNames.room,
                 pathParameters: {'id': tournament.id},
                 extra: tournament,

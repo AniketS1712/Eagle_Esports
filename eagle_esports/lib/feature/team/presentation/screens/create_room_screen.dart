@@ -21,7 +21,13 @@ class CreateRoomScreen extends ConsumerStatefulWidget {
 class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
   Future<void> _submit(String teamName, String? inGameLeaderName) async {
     try {
-      final userId = ref.read(authNotifierProvider).value!.user.id;
+      final userId = ref.read(authNotifierProvider).value?.user.id;
+      if (userId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Session expired. Please sign in again.')),
+        );
+        return;
+      }
       final teamId = await ref
           .read(teamActionsProvider.notifier)
           .createAndPayTeam(
@@ -32,7 +38,7 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
           );
 
       if (!mounted) return;
-      context.goNamed(RouteNames.teamRoom, pathParameters: {'id': teamId});
+      context.pushNamed(RouteNames.teamRoom, pathParameters: {'id': teamId});
     } catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(

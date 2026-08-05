@@ -19,7 +19,7 @@ class RoomScreen extends StatelessWidget {
       return;
     }
 
-    context.goNamed(
+    context.pushNamed(
       RouteNames.createRoom,
       pathParameters: {'id': selectedTournament.id},
       extra: selectedTournament,
@@ -77,7 +77,7 @@ class RoomScreen extends StatelessWidget {
                           child: SecondaryOutlineButton(
                             text: 'Join Room',
                             leadingIcon: const Icon(Icons.arrow_forward),
-                            onPressed: () => context.goNamed(
+                            onPressed: () => context.pushNamed(
                               RouteNames.joinRoom,
                               extra: tournament,
                             ),

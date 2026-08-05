@@ -1,8 +1,8 @@
-import 'package:eagle_esports/core/routes/route_names.dart';
 import 'package:eagle_esports/feature/splash/widget/form_field_section.dart';
 import 'package:eagle_esports/shared/widgets/eagle_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             backgroundColor: AppColors.statusSuccess,
           ),
         );
-        context.goNames(RouteNames.login);
+        context.pop();
       } catch (e) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -69,7 +69,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
-          onPressed: () => context.goNames(RouteNames.login),
+          onPressed: () => context.pop(),
         ),
       ),
       body: AppBackground(

@@ -26,57 +26,65 @@ class _TeamRoomScreenState extends ConsumerState<TeamRoomScreen> {
       body: AppBackground(
         child: SafeArea(
           bottom: false,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 640),
-                child: teamAsync.when(
-                  loading: () => const _LoadingState(),
-                  error: (error, stackTrace) =>
-                      _ErrorState(message: error.toString()),
-                  data: (team) {
-                    return membersAsync.when(
-                      loading: () => const _LoadingState(),
-                      error: (error, stackTrace) =>
-                          _ErrorState(message: error.toString()),
-                      data: (members) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const AppTopBar(
-                              title: 'Team Room',
-                              backRouteName: RouteNames.home,
-                            ),
-                            const SizedBox(height: AppSpacing.xxl),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    team.teamName,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTextStyles.headlineMd,
+          child: Column(
+            children: [
+              const AppTopBar(
+                title: 'Team Room',
+                backRouteName: RouteNames.home,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 640),
+                      child: teamAsync.when(
+                        loading: () => const _LoadingState(),
+                        error: (error, stackTrace) =>
+                            _ErrorState(message: error.toString()),
+                        data: (team) {
+                          return membersAsync.when(
+                            loading: () => const _LoadingState(),
+                            error: (error, stackTrace) =>
+                                _ErrorState(message: error.toString()),
+                            data: (members) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const SizedBox(height: AppSpacing.xxl),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          team.teamName,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTextStyles.headlineMd,
+                                        ),
+                                      ),
+                                      const SizedBox(width: AppSpacing.md),
+                                      StatusBadge(
+                                        status: team.paymentStatus.name,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(width: AppSpacing.md),
-                                StatusBadge(status: team.paymentStatus.name),
-                              ],
-                            ),
-                            const SizedBox(height: AppSpacing.lg),
+                                  const SizedBox(height: AppSpacing.lg),
 
-                            TeamInviteCodeCard(inviteCode: team.inviteCode),
-                            const SizedBox(height: AppSpacing.lg),
-                            Text('Players', style: AppTextStyles.labelMd),
-                            const SizedBox(height: AppSpacing.sm),
-                            TeamMembersList(members: members),
-                          ],
-                        );
-                      },
-                    );
-                  },
+                                  TeamInviteCodeCard(inviteCode: team.inviteCode),
+                                  const SizedBox(height: AppSpacing.lg),
+                                  Text('Players', style: AppTextStyles.labelMd),
+                                  const SizedBox(height: AppSpacing.sm),
+                                  TeamMembersList(members: members),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

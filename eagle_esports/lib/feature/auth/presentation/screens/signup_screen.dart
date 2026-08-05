@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:eagle_esports/core/routes/route_names.dart';
-import 'package:eagle_esports/feature/splash/widget/form_field_section.dart';
+import 'package:eagle_esports/feature/auth/presentation/widgets/signup_form_fields.dart';
+import 'package:eagle_esports/feature/auth/presentation/widgets/signup_submit_button.dart';
 import 'package:eagle_esports/shared/widgets/eagle_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eagle_esports/feature/auth/presentation/providers/auth_providers.dart';
 
@@ -75,7 +77,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           ),
         );
         // Navigate to OTP screen
-        context.goNames(RouteNames.otp, queryParameters: {'email': email});
+        context.pushNamed(RouteNames.otp, queryParameters: {'email': email});
       }
 
       if (mounted) {
@@ -113,9 +115,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Brand Header
-                  Column(
+                  const Column(
                     children: [
-                      const EagleLogo(
+                      EagleLogo(
                         showGlow: false,
                         subtitle: 'Create Your Profile',
                         showLogo: false,
@@ -132,142 +134,23 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          FormFieldSection(
-                            label: 'Full Name',
-                            child: AppTextField(
-                              controller: _nameController,
-                              hint: 'Commander Zero',
-                              prefixIcon: const Icon(
-                                Icons.person_outline,
-                                color: AppColors.primary,
-                                size: AppDimensions.iconSm,
-                              ),
-                              validator: (val) {
-                                if (val == null || val.isEmpty) {
-                                  return 'Full name is required';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-
-                          FormFieldSection(
-                            label: 'Email Address',
-                            child: AppTextField(
-                              controller: _emailController,
-                              hint: 'zero@eagle.gg',
-                              keyboardType: TextInputType.emailAddress,
-                              prefixIcon: const Icon(
-                                Icons.alternate_email,
-                                color: AppColors.primary,
-                                size: AppDimensions.iconSm,
-                              ),
-                              validator: (val) {
-                                if (val == null || val.isEmpty) {
-                                  return 'Email is required';
-                                }
-                                if (!val.contains('@')) {
-                                  return 'Invalid email address';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-
-                          FormFieldSection(
-                            label: 'Phone Number',
-                            child: AppTextField(
-                              controller: _phoneController,
-                              hint: '+1 (555) 000-0000',
-                              keyboardType: TextInputType.phone,
-                              prefixIcon: const Icon(
-                                Icons.phone_outlined,
-                                color: AppColors.primary,
-                                size: AppDimensions.iconSm,
-                              ),
-                              validator: (val) {
-                                if (val == null || val.isEmpty) {
-                                  return 'Phone number is required';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-
-                          FormFieldSection(
-                            label: 'Password',
-                            child: AppTextField(
-                              controller: _passwordController,
-                              hint: '••••••••••••',
-                              obscureText: true,
-                              prefixIcon: const Icon(
-                                Icons.lock_outline,
-                                color: AppColors.primary,
-                                size: AppDimensions.iconSm,
-                              ),
-                              validator: (val) {
-                                if (val == null || val.isEmpty) {
-                                  return 'Password is required';
-                                }
-                                if (val.length < 6) {
-                                  return 'Password must be at least 6 characters';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-
-                          // Terms agreement checkbox
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: Checkbox(
-                                  value: _acceptTerms,
-                                  activeColor: AppColors.statusSuccess,
-                                  checkColor: Colors.black,
-                                  side: const BorderSide(
-                                    color: AppColors.outlineVariant,
-                                  ),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      _acceptTerms = val ?? false;
-                                    });
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: AppSpacing.xs),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _acceptTerms = !_acceptTerms;
-                                    });
-                                  },
-                                  child: Text(
-                                    'I acknowledge the Terms of Condition and Policies.',
-                                    style: AppTextStyles.bodySm.copyWith(
-                                      color: AppColors.onSurfaceVariant,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                          SignupFormFields(
+                            nameController: _nameController,
+                            emailController: _emailController,
+                            phoneController: _phoneController,
+                            passwordController: _passwordController,
+                            acceptTerms: _acceptTerms,
+                            onAcceptTermsChanged: (val) {
+                              setState(() {
+                                _acceptTerms = val ?? false;
+                              });
+                            },
                           ),
                           const SizedBox(height: AppSpacing.lg),
 
                           // Submit Button
-                          PrimaryGradientButton(
-                            text: 'Create Account',
+                          SignupSubmitButton(
                             isLoading: _isLoading,
-                            leadingIcon: const Icon(
-                              Icons.chevron_right,
-                              color: Colors.white,
-                              size: AppDimensions.iconSm,
-                            ),
                             onPressed: _handleSignup,
                           ),
                         ],
@@ -290,7 +173,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       ),
                       const SizedBox(width: AppSpacing.xs),
                       InkWell(
-                        onTap: () => context.goNames(RouteNames.login),
+                        onTap: () => context.pushNamed(RouteNames.login),
                         child: Text(
                           'LOGIN SECURELY',
                           style: AppTextStyles.linkText.copyWith(

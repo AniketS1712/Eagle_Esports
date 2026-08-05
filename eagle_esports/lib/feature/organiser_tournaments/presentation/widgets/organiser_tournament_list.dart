@@ -6,6 +6,7 @@ import 'package:eagle_esports/models/tournament.dart';
 import 'package:eagle_esports/shared/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class OrganiserTournamentList extends ConsumerWidget {
   const OrganiserTournamentList({required this.selectedStatus, super.key});
@@ -59,7 +60,7 @@ class OrganiserTournamentList extends ConsumerWidget {
             final tournament = filteredTournaments[index];
             return TournamentListItem(
               tournament: tournament,
-              onTap: () => context.pushNames(
+              onTap: () => context.pushNamed(
                 RouteNames.organizerTournament,
                 pathParameters: {'id': tournament.id},
               ),

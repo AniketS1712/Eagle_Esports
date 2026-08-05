@@ -4,6 +4,7 @@ import 'package:eagle_esports/feature/splash/widget/form_field_section.dart';
 import 'package:eagle_esports/shared/widgets/eagle_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eagle_esports/feature/auth/presentation/providers/auth_providers.dart';
@@ -132,13 +133,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        'Security key recovery protocol offline.',
-                                      ),
-                                    ),
-                                  );
+                                  context.pushNamed(RouteNames.forgotPassword);
                                 },
                                 child: Text(
                                   'FORGOT PASSWORD?',
@@ -180,7 +175,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       const SizedBox(width: AppSpacing.xs),
                       InkWell(
-                        onTap: () => context.goNames(RouteNames.signup),
+                        onTap: () => context.pushNamed(RouteNames.signup),
                         child: Text(
                           'SIGN UP',
                           style: AppTextStyles.linkText.copyWith(

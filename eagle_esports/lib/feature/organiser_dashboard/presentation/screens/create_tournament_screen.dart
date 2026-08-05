@@ -1,4 +1,5 @@
 import 'package:eagle_esports/core/routes/route_names.dart';
+import 'package:eagle_esports/core/routes/route_path.dart';
 import 'package:eagle_esports/core/theme/theme.dart';
 import 'package:eagle_esports/feature/auth/presentation/providers/auth_providers.dart';
 import 'package:eagle_esports/feature/organiser_dashboard/presentation/widgets/create_tournament_submit_button.dart';
@@ -105,7 +106,7 @@ class _CreateTournamentScreenState
     if (!mounted) return;
 
     final state = ref.read(tournamentActionsProvider);
-    if (!state.hasError) context.goNamed(RouteNames.organiserDashboard);
+    if (!state.hasError) context.go(RoutePath.organiserDashboard);
   }
 
   Future<void> _previewTournament() async {

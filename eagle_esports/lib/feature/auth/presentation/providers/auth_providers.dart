@@ -25,9 +25,9 @@ final profileProvider = FutureProvider<Profile?>((ref) async {
       .from('profiles')
       .select()
       .eq('id', session.user.id)
-      .single();
+      .maybeSingle();
 
-  return Profile.fromMap(data);
+  return Profile.fromMap(data!);
 });
 
 final profileByIdProvider = FutureProvider.family<Profile?, String>((

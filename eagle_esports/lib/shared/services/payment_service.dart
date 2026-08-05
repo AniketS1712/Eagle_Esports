@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PaymentService {
   static String get _baseUrl {
@@ -49,40 +48,21 @@ class PaymentService {
     required String userId,
     required double amount,
   }) async {
-    bool confirmedOnBackend = false;
-
-    try {
-      final uri = Uri.parse('$_baseUrl/confirm-payment');
-      final response = await http.post(
-        uri,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'razorpay_payment_id': razorpayPaymentId,
-          'razorpay_order_id': razorpayOrderId,
-          'razorpay_signature': razorpaySignature,
-          'userId': userId,
-          'amount': amount,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        confirmedOnBackend = true;
-      }
-    } catch (_) {
-      // Backend endpoint may be unavailable; fall through to Supabase RPC.
-    }
-
-    if (confirmedOnBackend) return;
-
-    await Supabase.instance.client.rpc(
-      'credit_wallet',
-      params: {
-        'p_user_id': userId,
-        'p_amount': amount,
-        'p_category': 'topup',
-        'p_reference_id': null,
-        'p_description': 'Wallet top-up — ₹${amount.toStringAsFixed(0)}',
-      },
+    final uri = Uri.parse('$_baseUrl/confirm-payment');
+    final response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'razorpay_payment_id': razorpayPaymentId,
+        'razorpay_order_id': razorpayOrderId,
+        'razorpay_signature': razorpaySignature,
+        'userId': userId,
+        'amount': amount,
+      }),
     );
+
+    if (response.statusCode != 200) {
+      throw Exception('Payment verification failed. Please try again.');
+    }
   }
 }

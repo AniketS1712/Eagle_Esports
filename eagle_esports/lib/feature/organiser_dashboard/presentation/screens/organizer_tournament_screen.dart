@@ -66,7 +66,7 @@ class _OrganizerTournamentScreenState
   }
 
   Future<void> _manageLeaderboard() async {
-    context.pushNames(
+    context.pushNamed(
       RouteNames.organiserLeaderboard,
       pathParameters: {'id': widget.tournamentId},
     );
